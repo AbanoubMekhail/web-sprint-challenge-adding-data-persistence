@@ -5,6 +5,10 @@ function getResources() {
   return db("resources");
 }
 
+function getResourceById(resourceId) {
+  return db("resources").where({ resource_id: resourceId }).first();
+}
+
 function addResource(resource) {
   return db("resources").insert(resource);
 }
@@ -13,4 +17,5 @@ function addResource(resource) {
 module.exports = {
   getResources,
   addResource,
+  getResourceById,
 };

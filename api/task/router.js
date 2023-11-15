@@ -19,8 +19,11 @@ router.post("/", (req, res) => {
   const taskData = req.body;
 
   Tasks.addTask(taskData)
-    .then((task) => {
-      res.status(201).json(task);
+    .then((taskId) => {
+      return Tasks.getTaskById(taskId);
+    })
+    .then((newTask) => {
+      res.status(201).json(newTask);
     })
     .catch((error) => {
       console.log(error);
@@ -29,11 +32,11 @@ router.post("/", (req, res) => {
 });
 
 router.use((err, req, res, next) => { //eslint-disable-line
-    res.status(500).json({
-        customMessage: 'somthing went wrong inside the project router',
-        message: err.message,
-        stack: err.stack
-    })
+  res.status(500).json({
+    customMessage: 'somthing went wrong inside the project router',
+    message: err.message,
+    stack: err.stack
+  })
 })
 
 module.exports = router;

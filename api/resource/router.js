@@ -19,13 +19,16 @@ router.post("/", (req, res) => {
   const resourceData = req.body;
 
   Resources.addResource(resourceData)
-    .then((resource) => {
-      res.status(201).json(resource);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: "Error adding resource" });
-    });
+  .then((resourceId) => {
+    return Resources.getResourceById(resourceId);
+  })
+  .then((newResource) => {
+    res.status(201).json(newResource);
+  })
+  .catch((error) => {
+    console.log(error);
+    res.status(500).json({ error: "Error adding resource" });
+  });
 });
 
 router.use((err, req, res, next) => { //eslint-disable-line
